@@ -4,26 +4,27 @@ function solution(num, arr) {
     let answer = 0
     let p1 = 0
     let p2 = 1
-    let temp = []
     let sum = 0
 
-    for (let i = 0; i < arr.length - 1; i+=1) {
-        debugger
-        sum = arr.slice(i, p2 + 1).reduce((a, b) => a + b)
+    function repeat() {
+        if (p2 === arr.length + 1) {
+            return
+        }
+        const slice = arr.slice(p1, p2)
+        sum = slice.reduce((a, b) => a + b)
 
         if (sum === num) {
-            answer += 1
-        }
-        while (sum < num) {
+            p1 += 1
             p2 += 1
-            sum = arr.slice(i, p2 + 1).reduce((a, b) => a + b)
-
-            if (sum === num) {
-                answer += 1
-                break
-            }
+            answer += 1
+        } else if (sum > num) {
+            p1 += 1
+        } else if (sum < num) {
+            p2 += 1
         }
+        repeat()
     }
+    repeat()
     return answer
 }
 
