@@ -1,19 +1,38 @@
 const { log } = console
 
 function solution(argArr) {
-    let answer
+    let answer = 0
     let temp = []
+    let sum = 0
 
-    for (let i=0;i<72;i+=1) {
-        argArr.forEach(v => {
-            if (v[0] <= i && v[1] > i) {
-                temp[i] = (temp[i] || 0) + 1
+    argArr.forEach(v => {
+        temp.push([v[0], 's'])
+        temp.push([v[1], 'e'])
+    });
+
+    temp.sort((a, b) => {
+        if (a[0] === b[0]) {
+            if (a[1] === 'e') {
+                return -1
+            } else {
+                return 1
             }
-        })
-    }
+        } else {
+            return a[0] - b[0]
+        }
+    })
 
-    log(temp)
-    
+    temp.forEach(v => {
+        if (v[1] === 's') {
+            sum += 1
+        } else {
+            sum -= 1
+        }
+        if (answer < sum) {
+            answer = sum
+        }
+    });
+
     return answer
 }
 
